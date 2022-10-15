@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>puppy</title>
+    <style>
+        .nav{
+           width: 100%;
+           display: flex;
+           justify-content: space-around;
+           background-color: bisque;
+           border-radius: 10px;
+        }
+        .nav>div{
+            padding: 20px 10px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div onclick="window.location.href='/home.html'">Home</div>
+        <div onclick="window.location.href='/search.html'">Search</div>
+    </nav>
+    <div id="container">
+
+    </div>
+</body>
+</html>
+<script>
+    let  breedName= localStorage.getItem("name");
+    console.log(breedName)
+    searchDog()
+    async function searchDog(){
+        try{
+            var api = `https://dog.ceo/api/breed/${breedName}/images/`
+            var res = await fetch(api);
+            var data = await res.json();
+            appendData(data.message);
+            console.log(data)
+        } catch(error){
+            console.log("error" , error)
+        }
+    }
+    let cotnainer = document.getElementById("container")
+    function appendData(data){
+        data.map((elem)=>{
+            var div = document.createElement("div");
+            var img = document.createElement("img");
+            img.src = elem;
+            div.append(img);
+            container.append(div);
+        })
+    }
+</script>

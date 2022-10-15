@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        .nav{
+           width: 100%;
+           display: flex;
+           justify-content: space-around;
+           background-color: bisque;
+           border-radius: 10px;
+        }
+        .nav>div{
+            padding: 20px 10px;
+            font-size: 20px;
+        }
+        #display_item{
+            width: 80%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+        #display_item>div{
+            text-align: center;
+            margin: 10px;
+            border-radius: 12px;box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div>Home</div>
+        <div onclick="window.location.href='/search.html'">Search</div>
+    </nav>
+    <div id="display_item">
+        
+    </div>
+</body>
+</html>
+
+<script>
+
+    dogBreeds();
+
+    async function dogBreeds() {
+        try {
+            let data = await fetch('https://dog.ceo/api/breeds/list/all');
+            data = await data.json();
+            for (key in data.message) {
+                appendBreeds(key);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+function appendBreeds(data) {
+    let div = document.createElement("div");
+    div.className = "Item";
+    let h2 = document.createElement("h2");
+    h2.innerText = data;
+
+    div.addEventListener("click", () => {
+        window.location.href = "./puppy.html"
+        localStorage.setItem("name", JSON.stringify(data))
+    })
+    div.appendChild(h2);
+    document.getElementById("display_item").append(div);
+}
+
+    
+</script>
